@@ -15,30 +15,37 @@ function getIndice(id) {
         return indice;
 };
 
-function show(id){
-    const el = db.find(el => el.id == id);
-    
-    return el
-};
-
 function model(id = ++ultimoId) {
-    const nome = prompt("Digite o nome: ");
+    const bairro = prompt("Digite o bairro: ");
+    const numero = prompt("Digite o número: ");
+    const rua = prompt("Digite a rua: ");
+
     let id_corretora = 0;
     if (corretora.listar()) {
         id_corretora = parseInt(prompt("Digite o ID da corretora"));
+    } else {
+        console.log("Nenhuma corretora encontrada");
     }
     
-    if(nome != "" &&
+    if(bairro != "" && numero > 0 & rua != "" &&
         corretora.show(id_corretora)
     ){
         return {
             id,
-            nome,
+            bairro,
+            numero,
+            rua,
             id_corretora
         };
     };
 
     console.log("Dados inválidos");
+};
+
+function show(id){
+    const el = db.find(el => el.id == id);
+    
+    return el
 };
 
 const criar = () => {

@@ -1,5 +1,4 @@
 const prompt = require("prompt-sync")({sigint:true});
-const corretora = require("./corretora.js");
 
 const db = [];
 
@@ -15,30 +14,24 @@ function getIndice(id) {
         return indice;
 };
 
-function show(id){
-    const el = db.find(el => el.id == id);
-    
-    return el
-};
-
 function model(id = ++ultimoId) {
     const nome = prompt("Digite o nome: ");
-    let id_corretora = 0;
-    if (corretora.listar()) {
-        id_corretora = parseInt(prompt("Digite o ID da corretora"));
-    }
-    
-    if(nome != "" &&
-        corretora.show(id_corretora)
-    ){
+
+    if(nome != ""){
         return {
             id,
-            nome,
-            id_corretora
+            nome
         };
     };
 
     console.log("Dados inválidos");
+    // ultimoId-- = Queima o ID cada vez que é criado independente de sucesso
+};
+
+function show(id){
+    const el = db.find(el => el.id == id);
+    
+    return el
 };
 
 const criar = () => {

@@ -1,5 +1,8 @@
 const prompt = require("prompt-sync")({sigint:true});
-const corretora = require("./corretora.js");
+
+const corretor = require("./corretor.js");
+const imovel = require("./imovel.js");
+const cliente = require("./cliente.js");
 
 const db = [];
 
@@ -15,30 +18,44 @@ function getIndice(id) {
         return indice;
 };
 
-function show(id){
-    const el = db.find(el => el.id == id);
-    
-    return el
-};
-
 function model(id = ++ultimoId) {
-    const nome = prompt("Digite o nome: ");
-    let id_corretora = 0;
-    if (corretora.listar()) {
-        id_corretora = parseInt(prompt("Digite o ID da corretora"));
-    }
+    let id_corretor = 0;
+    if (corretor.listar()) {
+        id_corretor = parseInt(prompt("Digite o ID da corretor: "));
+    };
+
+    let id_imovel = 0;
+    if (imovel.listar()){
+        id_imovel = parseInt(prompt("Digite o ID do imóvel: "));
+    };
+
+    let id_cliente = 0;
+    if (cliente.listar()) {
+        id_cliente = parseInt(prompt("Digite o ID do cliente: "));
+    };
     
-    if(nome != "" &&
-        corretora.show(id_corretora)
+    if(
+        imovel.mostrar(id_imovel) &&
+        cliente.mostrar(id_cliente) &&
+        corretor.mostrar(id_corretor) &&
+        corretor.mostrar(id_corretor).id_corretora ==
+        imovel.mostrar(id_imovel).id_corretora
     ){
         return {
             id,
-            nome,
-            id_corretora
+            id_corretor,
+            id_imovel,
+            id_cliente
         };
     };
 
     console.log("Dados inválidos");
+};
+
+function show(id){
+    const el = db.find(el => el.id == id);
+    
+    return el
 };
 
 const criar = () => {
